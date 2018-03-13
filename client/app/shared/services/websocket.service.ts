@@ -7,7 +7,8 @@ import {Observer} from "rxjs/Observer";
 export class WebSocketService {
 	private subject: Subject<MessageEvent>;
 	private subjectData: Subject<number>;
-
+	private ws: any;
+	private wsCreate: any
 	// For chat box
 	public connect(url: string): Subject<MessageEvent> {
 		if (!this.subject) {
@@ -17,27 +18,33 @@ export class WebSocketService {
 	}
 
 	private create(url: string): Subject<MessageEvent> {
-		let ws = new WebSocket(url);
+		this.ws = new WebSocket(url);
 
 		let observable = Observable.create(
 			(obs: Observer<MessageEvent>) => {
-				ws.onmessage = obs.next.bind(obs);
-				ws.onerror   = obs.error.bind(obs);
-				ws.onclose   = obs.complete.bind(obs);
+				this.ws.onmessage = obs.next.bind(obs);
+				this.ws.onerror   = obs.error.bind(obs);
+				this.ws.onclose   = obs.complete.bind(obs);
 
-				return ws.close.bind(ws);
+				return this.ws.close.bind(this.ws);
 			});
 
 		let observer = {
 			next: (data: Object) => {
-				if (ws.readyState === WebSocket.OPEN) {
-					ws.send(JSON.stringify(data));
+				if (this.ws.readyState === WebSocket.OPEN) {
+					this.ws.send(JSON.stringify(data));
 				}
 			}
 		};
 
 		return Subject.create(observer, observable);
-	}
+  	}
+	
+	public close() {
+	    console.log('on closing WS');
+	    this.ws.close()
+	    this.subject = null
+	  }
 
 	// For random numbers
 	public connectData(url: string): Subject<number> {
@@ -48,7 +55,7 @@ export class WebSocketService {
 	}
 
 	private createData(url: string): Subject<number> {
-		let ws = new WebSocket(url);
+		this.wsCreate = new WebSocket(url);
 
 		let observable = Observable.create(
 			(obs: Observer<number>) => {
@@ -56,17 +63,23 @@ export class WebSocketService {
 				ws.onerror   = obs.error.bind(obs);
 				ws.onclose   = obs.complete.bind(obs);
 
-				return ws.close.bind(ws);
+				return this.wsCreate.close.bind(this.wsCreate);
 			});
 
 		let observer = {
 			next: (data: Object) => {
-				if (ws.readyState === WebSocket.OPEN) {
-					ws.send(JSON.stringify(data));
+				if (this.wsCreate.readyState === WebSocket.OPEN) {
+					this.wsCreate.send(JSON.stringify(data));
 				}
 			}
 		};
 
 		return Subject.create(observer, observable);
 	}
+	
+	public closeData() {
+	    console.log('on closing WS');
+	    this.wsCreate.close()
+	    this.subjectData = null
+	  }
 } // end class WebSocketService
