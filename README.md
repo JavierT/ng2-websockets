@@ -1,6 +1,9 @@
 # ng2-websockets
-Example project of using WebSockets in an Angular 2 application.
+Example project of using WebSockets in an Angular 2 application taken from https://github.com/PeterKassenaar/ng2-websockets
 
+It has just been edited to add the close of the WS after leaving the view. 
+
+Original description: 
 This project consists of two parts, a client (angular 2.4, as of Feb.02.2017) and server part (Nodejs 4.x+).
 
 ## Server(s)
@@ -32,10 +35,6 @@ interface Message {
 the field newDate is added by the server.
 
 The number server emits just a simple random number 0 - 10,000.
-
-## TODO
-- ~~The server crashes if the client is reloaded - working on that, PR's welcome! For now: just restart the server with Ctrl+C and `nodemon server.js` again.~~
-- Text is copied as many times as there are connected clients. 
 
 ## Credits
 This project is based on previous work by Łukasz Wojciechowski (https://github.com/lwojciechowski/mildchat-client), who also wrote [this great article] (https://medium.com/@lwojciechowski/websockets-with-angular2-and-rxjs-8b6c5be02fac#.v1d65auh8)  on Angular 2 and websockets.
