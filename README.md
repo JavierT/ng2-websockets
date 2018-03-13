@@ -1,7 +1,7 @@
 # ng2-websockets
 Example project of using WebSockets in an Angular 2 application taken from https://github.com/PeterKassenaar/ng2-websockets
 
-It has just been edited to add the close of the WS after leaving the view. 
+## It has just been edited to add the close of the WS after leaving the view. 
 
 Original description: 
 This project consists of two parts, a client (angular 2.4, as of Feb.02.2017) and server part (Nodejs 4.x+).
