@@ -40,4 +40,8 @@ export class ChatService {
 				return response.data;
 			})
 	}
+
+	public close() {
+		this.wsService.close()
+	}
 } // end class ChatService
