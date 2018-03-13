@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ChatService, Message} from '../shared/services/chat.service';
 
 @Component({
@@ -24,4 +24,9 @@ export class ChatComponent implements OnInit {
 			this.messages.push(msg);
 		});
 	}
+	
+	ngOnDestroy() {
+    		this.chatService.messages.unsubscribe();
+    		this.chatService.close()
+  	}
 }
